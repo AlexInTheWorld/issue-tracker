@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Issue Tracker</title>
+    <meta name="description" content="Issue tracker project for FCC">
+    <link id="favicon" rel="icon" href="https://hyperdev.com/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/public/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>All issues for: <span id='projectTitle'></span></h1>
+    </header>
+    <main>
+      <div id='submitNewIssue'>
+        <h4>Submit a new issue:</h4><br>
+        <form id="newIssue" method="post" action="/api/">
+          <input type="text" name="issue_title" placeholder="*Title" required=''><br>
+          <textarea type="text" name="issue_text" placeholder="*Text" required=''></textarea><br>
+          <input type="text" name="created_by" placeholder="*Created by" required=''>
+          <input type="text" name="assigned_to" placeholder="(opt)Assigned to">
+          <input type="text" name="status_text" placeholder="(opt)Status text"><br>
+          <button type="submit">Submit Issue</button>
+        </form>
+      </div>
+      <div id='issueDisplay'></div>
+      <hr>
+    </main>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script>
+      $(function() {
+        var currentProject = window.location.pathname.replace(/\//g, "");;
+        var url = "/api/issues/"+currentProject;
+        $('#projectTitle').text(currentProject.toUpperCase())
+        $.ajax({
+          type: "GET",
+          url: url,
+          success: function(data)
+          {
+            var issues= [];
+            data.forEach(function(ele) {
+              var openstatus;
+              (ele.open) ? openstatus = 'open' : openstatus = 'closed';
+              var single = [
+                '<div class="issue '+openstatus+'">',
+                '<p class="id">id: '+ele._id+'</p>',
+                '<h3>'+ele.issue_title+' -  ('+openstatus+')</h3>',
+                '<p>'+ele.issue_text+'</p>',
+                '<p class="status">'+ele.status_text+'</p>',
+                '<div class="identification-details">','<p class="id"><b>Created by:</b> '+ele.created_by+ '</p>', '<p class="id"><b>Assigned to:</b> '+ele.assigned_to+ '</p>',
+                '<p class="id"><b>Created on:</b> '+ele.created_on+ '</p>',
+                '<p class="id"><b>Last updated:</b> '+ele.updated_on+ '</p>',
+                '<p><a href="#" class="closeIssue" id=' + ele._id + '>close</a></p>',
+                '<p><a href="#" class="deleteIssue" id=' + ele._id + '>delete</a></p>',
+                '</div>','</div>'
+                
+              ];
+              issues.push(single.join(''));
+            });
+            $('#issueDisplay').html(issues.join(''));
+          }
+        });
+        
+        $('#newIssue').submit(function(e){
+          e.preventDefault();
+          $(this).attr('action', "/api/issues/" + currentProject);
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: $(this).serialize(),
+            success: function(data) { window.location.reload(true); }
+          });
+        });
+        
+        $('#issueDisplay').on('click','.closeIssue', function(e) {
+          var url = "/api/issues/"+currentProject;
+          $.ajax({
+            type: "PUT",
+            url: url,
+            data: {_id: $(this).attr('id'), open: false},
+            success: function(data) { alert(data); window.location.reload(true); }
+          });
+          e.preventDefault();
+        });
+        $('#issueDisplay').on('click','.deleteIssue', function(e) {
+          var url = "/api/issues/"+currentProject;
+          $.ajax({
+            type: "DELETE",
+            url: url,
+            data: {_id: $(this).attr('id')},
+            success: function(data) {  window.location.reload(true); }
+          });
+          e.preventDefault();
+        });
+      });
+   </script>
+  </body>
+</html>

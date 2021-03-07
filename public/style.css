@@ -1,0 +1,150 @@
+/* IMPORT custom font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  padding: 1vw;
+}
+
+#foreground, #background {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#title-container {
+  width: 90vw;
+  position: relative;
+  top: 5px;
+  left: 4vw;
+  height: 60px;
+  border: 3px solid black;
+}
+
+#foreground {
+  position: relative;
+  z-index: 2;
+}
+
+#background {
+  position: absolute;
+  z-index: 1;
+  background-color: #cb4154;
+}
+
+#letters {
+  max-width: 500px;
+  height: 100%;
+  margin: 0 auto;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 600;
+}
+
+.letter {
+  width: 7.6923076923%;
+  float: left;
+  height: 100%;
+  text-align: center;
+  line-height: 54px;
+}
+
+#example-usage {
+  margin: auto 4vw 0 4vw;
+}
+
+h3 {
+  margin: 1.5rem auto 1rem auto;
+}
+
+code {
+  border-bottom: 1px solid red;
+  background: #ffdae0;
+  line-height: 1.2rem;
+}
+
+hr {
+  margin: 50px 3vw;
+}
+
+.issue {
+  margin: 20px;
+  padding: 5px;
+/*   width: 60%; */
+  border: 2px solid black;
+}
+
+.closed {
+  background-color: lightgray;
+}
+
+.id {
+  font-size: 10.5px;
+}
+
+span {
+  color:rgb(63, 70, 67);
+}
+
+h1, main {
+  text-align: center;
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto;
+  grid-row-gap: 4px;
+  width: 300px;
+  margin: auto;
+}
+
+input[type="text"] {
+  border-radius: 5px;
+  border-top: 1px solid #331306;
+  border-bottom: 2px solid #a18c81;
+  border-right: 2px solid #a18c81;
+  border-left: 1px solid #331306;
+}
+
+textarea {
+  height: 60px;
+  background: #d3eded;
+}
+
+button {
+  width: 50%;
+  margin: 10px auto;
+  background: #ebebeb;
+  border: 2px solid silver;
+  outline: 1px solid black;
+}
+
+.identification-details {
+  color: #6e1c16;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  margin-top: 15px;
+}
+
+.identification-details > p:nth-child(odd) {
+  text-align: right;
+}
+
+.identification-details > p:nth-child(even) {
+  text-align: left;
+}
+
+.status {
+  color: rgb(139, 136, 131);
+}
+
+@media only screen and (max-width: 300px) {
+  form {
+    width: 95vw;
+  }
+}

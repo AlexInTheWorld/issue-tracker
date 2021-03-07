@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Issue Tracker</title>
+    <meta name="description" content="Issue tracker project for FCC">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./public/style.css"> 
+  </head>
+  <body>
+    <header>
+      <div id="title-container">
+        <div id="foreground">
+          <div id="letters"></div>
+        </div>
+        <div id="background"></div>
+      </div>
+    </header>
+    <div id="example-usage">
+      <h3>Example /GET/ usage:</h3>
+      <code>/api/issues/{project}</code><br>
+      <code>/api/issues/{project}?open=true&amp;assigned_to=Joe</code><br>
+      <h3>Example return:</h3>
+      <code>[{"_id":"5871dda29faedc3491ff93bb", "issue_title":"Fix error in posting data", "issue_text":"When we post data it has an error.", "created_on":"2017-01-08T06:35:14.240Z", "updated_on":"2017-01-08T06:35:14.240Z","created_by":"Joe", "assigned_to":"Joe", "open":true, "status_text":"In QA"},...]</code>
+    </div>
+    <hr>
+    <main>
+      <h2><a href='/apitest/'>APITEST examples: Go to <i>/apitest/</i> project issues</a></h2>
+      <hr>
+      <div id='testui'>
+        <h2>API Tests:</h2>
+        <h3>Submit issue on <i>apitest</i></h3>
+        <form id="testForm">
+          <input type="text" name="issue_title" placeholder="*Title" required=''>
+          <textarea type="text" name="issue_text" placeholder="*Text" required=''></textarea>
+          <input type="text" name="created_by" placeholder="*Created by" required=''>
+          <input type="text" name="assigned_to" placeholder="Assigned to (opt)">
+          <input type="text" name="status_text" placeholder="Status text (opt)">
+          <button type="submit">Submit Issue</button>
+        </form><br>
+        <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
+        <form id="testForm2">
+          <input type="text" name="_id" placeholder="*_id" required=''>
+          <input type="text" name="issue_title" placeholder="Title (opt)">
+          <textarea type="text" name="issue_text" placeholder="Text (opt)"></textarea>
+          <input type="text" name="created_by" placeholder="Created by (opt)">
+          <input type="text" name="assigned_to" placeholder="Assigned to (opt)">
+          <input type="text" name="status_text" placeholder="Status text (opt)">
+          <label><input type="checkbox" name="open" value=false> Check to close issue</label>
+          <button type="submit">Submit Issue</button>
+        </form><br>
+        <h3>Delete issue on <i>apitest</i></h3>
+        <form id="testForm3">
+          <input type="text" name="_id" placeholder="* _id" required=''>
+          <button type="submit">Delete Issue</button>
+        </form>
+        <code id='jsonResult'></code>
+      </div>
+    </main>
+  <script src="public/index.js"></script>
+  </body>
+</html>
